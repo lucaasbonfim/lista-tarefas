@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do</title>
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fontawesome/all.min.css">
+    <link rel="shortcut icon" href="assets/img/task-management.png">
+</head>
+<body>
+    
+    <div class="container my-5">
+
+
+        <!-- cabeçalho -->
+        <div class="row mb-5">
+            <div class="col d-flex align-items-center">
+                <img src="assets/img/task-management.png" alt="Logo" class="img-fluid" width="30px">
+                <h2>Lista de Tarefas</h2>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-12 p-3 shadow">
+                <div class="row h5 align-items-center">
+                    <div class="col">Nome Tarefa</div>
+                    <div class="col">Custo</div>
+                    <div class="col">Data Limite</div>
+                    <div class="col-1">Subir</div>
+                    <div class="col-1">Descer</div>
+                    <div class="col-1">Editar</div>
+                    <div class="col-1">Apagar</div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- tarefa -->
+        <div id="tasks-container" class="d-none">
+
+            <div class="row mb-3">
+                <div class="col-12 border border-secondary rounded p-3 shadow">
+                    <div class="row h5 align-items-center">
+                        <div class="col">Nome Tarefa</div>
+                        <div class="col">Custo</div>
+                        <div class="col">Data Limite</div>
+                        <div class="col-1"><i class="fa-solid fa-circle-arrow-up"></i></div>
+                        <div class="col-1"><i class="fa-solid fa-circle-arrow-down"></i></i></div>
+                        <div class="col-1"><a href="#" id="btn-edit-task"><i class="fa-solid fa-pen-to-square"></i></a></div>
+                        <div class="col-1"><i class="fa-solid fa-trash"></i></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- sem tarefas -->
+        <div class="row d-none" id="no_task">
+            <div class="col text-center">
+                <span class="opacity-75">Não existem tarefas.</span>
+            </div>
+        </div>
+
+
+        <!-- Botão Criar Tarefa -->
+        <div class="col text-end">
+            <div class="d-flex justify-content-begin">
+                <a href="#" class="btn btn-secondary" id="button-newtask"><i class="fa-solid fa-plus me-2"></i>Nova Tarefa</a>
+            </div>
+        </div>
+
+        <!-- criar nova tarefa -->
+        <dialog class="btn-primary border-0 rounded p-5 shadow-lg" id="new-task">
+            <div class="col">
+                
+                <h3>Criar Tarefa</h3>
+                <div class="mb-3">
+                    <input type="text" id="task-name" class="text_name rounded p-2" class="form-control" maxlength="100" placeholder="Nome da Tarefa">
+                    <input type="text" id="task-cost" class="text_cost rounded p-2" class="form-control" placeholder="Custo R$">
+                    <input type="text" id="task-deadline" class="text_deadline rounded p-2" class="form-control" placeholder="Data Limite">
+                </div>
+                <div class="text-center">
+                    <a href="index.html" class="btn btn-secondary" id="btn-cancelar">Cancelar</a>
+                    <button class="btn btn-secondary" id="btn-salvar">Salvar</button>
+                </div>
+                
+            </div>
+        </dialog>
+
+        <!-- editar tarefa -->
+        <dialog class="btn-primary border-0 rounded p-4 shadow-lg" id="edit-task">
+            <div class="col">
+                
+                <h3 class="text-secondary text-center">Editar Tarefa</h3>
+                <div class="mb-3 pt-3">
+                    <input type="text" class="text_name rounded p-2" class="form-control" maxlength="100" placeholder="Nome da Tarefa" value="" id="edit-name">
+                    <input type="text" class="text_cost rounded p-2" class="form-control" placeholder="Custo R$" value="" id="edit-cost">
+                    <input type="text" class="text_deadline rounded p-2" class="form-control" placeholder="Data Limite" value="" id="edit-data">
+                </div>
+                <div class="text-center">
+                    <a href="index.html" class="btn btn-secondary" id="button-cancelar">Cancelar</a>
+                    <button class="btn btn-secondary" id="btn_atualizar">Atualizar</button>
+                </div>
+                
+            </div>
+        </dialog>
+
+
+        <!-- confirmação de exclusão -->
+        <dialog class="btn-primary border-0 rounded p-5 shadow-lg" id="delete-task-confirm">
+            <div class="col">
+                
+                <h4 class="text-secondary">Deseja realmente apagar a tarefa?</h4>
+                <div class="text-center pt-3">
+                    <a href="index.html" class="btn btn-secondary" id="button-cancelar">Cancelar</a>
+                    <button href="#" class="btn btn-secondary" id="btn_confirmar">Confirmar</button>
+                </div>
+                
+            </div>
+        </dialog>
+
+    </div>
+    
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/index.js"></script>
+    <script src="assets/js/api.js"></script>
+</body>
+</html>

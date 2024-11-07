@@ -1,0 +1,10 @@
+.edit_link {
+    opacity: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.edit_link:hover {
+    opacity: 100%;
+    transform: scale(1.3);
+}
