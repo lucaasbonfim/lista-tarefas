@@ -31,3 +31,136 @@ buttonSalvar.addEventListener("click", function (event) {
     event.preventDefault(); 
     createTask();
 });
+
+document.getElementById("edit-data").addEventListener("input", function(event) {
+    let valor = event.target.value;
+    
+    // Remove todos os caracteres não numéricos
+    valor = valor.replace(/\D/g, '');
+
+    // Impede a digitação de mais de 8 caracteres
+    if (valor.length > 8) {
+        valor = valor.substring(0, 8); // Limita a 8 caracteres
+    }
+
+    // Formata a data automaticamente com as barras em tempo real
+    if (valor.length <= 2) {
+        valor = valor.replace(/(\d{2})(\d+)/, '$1/$2'); // Adiciona a barra após o dia
+    } else if (valor.length <= 4) {
+        valor = valor.replace(/(\d{2})(\d{2})(\d+)/, '$1/$2/$3'); // Adiciona a barra após o mês
+    } else {
+        valor = valor.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3'); // Adiciona a barra após o ano
+    }
+
+    // Atualiza o valor do campo com a data formatada
+    event.target.value = valor;
+});
+
+document.getElementById("task-deadline").addEventListener("input", function(event) {
+    let valor = event.target.value;
+    
+    // Remove todos os caracteres não numéricos
+    valor = valor.replace(/\D/g, '');
+
+    // Impede a digitação de mais de 8 caracteres
+    if (valor.length > 8) {
+        valor = valor.substring(0, 8); // Limita a 8 caracteres
+    }
+
+    // Formata a data automaticamente com as barras em tempo real
+    if (valor.length <= 2) {
+        valor = valor.replace(/(\d{2})(\d+)/, '$1/$2'); // Adiciona a barra após o dia
+    } else if (valor.length <= 4) {
+        valor = valor.replace(/(\d{2})(\d{2})(\d+)/, '$1/$2/$3'); // Adiciona a barra após o mês
+    } else {
+        valor = valor.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3'); // Adiciona a barra após o ano
+    }
+
+    // Atualiza o valor do campo com a data formatada
+    event.target.value = valor;
+});
+
+
+
+document.getElementById("edit-cost").addEventListener("input", function(event) {
+    let valor = event.target.value;
+
+    // Remove caracteres não numéricos, exceto ponto e vírgula
+    valor = valor.replace(/[^0-9,\.]/g, '');
+
+    // Substitui a vírgula por ponto, pois o float usa ponto como separador decimal
+    valor = valor.replace(',', '.');
+
+    // Verifica se o valor é válido como número float
+    if (!validarFloat(valor)) {
+        event.target.setCustomValidity("Por favor, insira um número válido.");
+    } else {
+        event.target.setCustomValidity("");
+    }
+
+    // Atualiza o valor do campo com a entrada limpa e convertida
+    event.target.value = valor;
+});
+
+document.getElementById("task-cost").addEventListener("input", function(event) {
+    let valor = event.target.value;
+
+    // Remove caracteres não numéricos, exceto ponto e vírgula
+    valor = valor.replace(/[^0-9,\.]/g, '');
+
+    // Substitui a vírgula por ponto, pois o float usa ponto como separador decimal
+    valor = valor.replace(',', '.');
+
+    // Verifica se o valor é válido como número float
+    if (!validarFloat(valor)) {
+        event.target.setCustomValidity("Por favor, insira um número válido.");
+    } else {
+        event.target.setCustomValidity("");
+    }
+
+    // Atualiza o valor do campo com a entrada limpa e convertida
+    event.target.value = valor;
+});
+
+function validarFloat(valor) {
+    // Regex para validar números decimais com ponto (permitindo apenas um ponto)
+    const regexFloat = /^[+-]?\d+(\.\d+)?$/;
+    return regexFloat.test(valor);
+}
+
+
+function validarData(valor) {
+    const regexData = /^\d{2}\/\d{2}\/\d{4}$/;
+    return regexData.test(valor);
+}
+
+document.getElementById("btn-salvar").addEventListener("click", function(event) {
+    event.preventDefault(); // Impede o envio do formulário
+
+    // Validação dos campos
+    let nome = document.getElementById("task-name").value;
+    let custo = document.getElementById("task-cost").value;
+    let data = document.getElementById("task-deadline").value;
+
+    let erros = [];
+
+    // Valida o campo de nome (exemplo de validação simples)
+    if (nome.trim() === "") {
+        erros.push("Nome está vazio.");
+    }
+
+    // Valida o campo de custo (precisa ser um número válido)
+    if (!validarFloat(custo)) {
+        erros.push("Custo está inválido.");
+    }
+
+    // Valida o campo de data (precisa ser no formato DD/MM/YYYY)
+    if (!validarData(data)) {
+        erros.push("Data está inválida.");
+    }
+
+    // Se houver erros, mostra um alerta
+    if (erros.length > 0) {
+        alert("Os seguintes campos estão incorretos:\n\n" + erros.join("\n"));
+    }
+});

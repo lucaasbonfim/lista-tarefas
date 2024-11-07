@@ -112,9 +112,9 @@ async function edit_task(id) {
 
         const task = await response.json();
 
-        const nome = document.getElementById("edit-name");
-        const custo = document.getElementById("edit-cost");
-        const data = document.getElementById("edit-data");
+        let nome = document.getElementById("edit-name");
+        let custo = document.getElementById("edit-cost");
+        let data = document.getElementById("edit-data");
 
         nome.value = task.name;
         custo.value = task.cost;
@@ -125,6 +125,32 @@ async function edit_task(id) {
         const bottonAtualizar = document.getElementById("btn_atualizar");
 
         bottonAtualizar.onclick = async function () {
+
+            nome = document.getElementById("edit-name");
+            custo = document.getElementById("edit-cost");
+            data = document.getElementById("edit-data");
+
+            let erros = [];
+
+            if (nome.value.trim() === "") {
+                erros.push("Nome está vazio.");
+            }
+        
+            // Valida o campo de custo (precisa ser um número válido)
+            if (!validarFloat(custo.value)) {
+                erros.push("Custo está inválido.");
+            }
+        
+            // Valida o campo de data (precisa ser no formato DD/MM/YYYY)
+            if (!validarData(data.value)) {
+                erros.push("Data está inválida.");
+            }
+
+            if (erros.length > 0) {
+                alert("Os seguintes campos estão incorretos:\n\n" + erros.join("\n"));
+                return 0;
+            }            
+
             const dados = {
                 name: nome.value,
                 cost: custo.value,
@@ -143,10 +169,11 @@ async function edit_task(id) {
                 });
 
                 if (updateResponse.ok) {
-                    console.log("Tarefa atualizada com sucesso");
                     document.querySelector("#edit-task").close();
+                    console.log("Tarefa atualizada com sucesso");
                     window.location.reload();
                 } else {
+                    alert("Nome da tarefa já existe!");
                     console.error("Erro ao atualizar a tarefa");
                 }
 
