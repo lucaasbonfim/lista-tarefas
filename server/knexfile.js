@@ -5,12 +5,7 @@ export default {
 
     development: {
         client: "pg",
-        connection: {
-            database: "tarefas",
-            port: 5432,
-            user: "postgres",
-            password: "21031998"
-        },
+        connection:"postgresql://tarefas_owner:mUVTXy1r9Cvw@ep-rough-resonance-a5pwtrlc.us-east-2.aws.neon.tech/tarefas?sslmode=require",
         migrations: {
             tableName: "migrations",
             directory: `${currentDir}/src/database/migrations`

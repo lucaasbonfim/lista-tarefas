@@ -6,7 +6,7 @@ window.onload = () => {
 
 async function get_task() {
     try {
-        const response = await fetch(`http://localhost:3000/task`);
+        const response = await fetch(`${window.location.origin}/task`);
 
         if (response.status === 200) {
             let tarefas = await response.json();
