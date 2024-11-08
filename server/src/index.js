@@ -2,6 +2,12 @@ import express from "express";
 import routes from "./routes.js";
 import cors from "cors";
 
+
+app.get("/api/test", (req, res) => {
+    res.send("API is working!");
+  });
+  
+
 const app = express();
 
 app.use(cors());
