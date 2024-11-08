@@ -35,48 +35,39 @@ buttonSalvar.addEventListener("click", function (event) {
 document.getElementById("edit-data").addEventListener("input", function(event) {
     let valor = event.target.value;
     
-    // Remove todos os caracteres não numéricos
     valor = valor.replace(/\D/g, '');
 
-    // Impede a digitação de mais de 8 caracteres
     if (valor.length > 8) {
-        valor = valor.substring(0, 8); // Limita a 8 caracteres
+        valor = valor.substring(0, 8);
     }
 
-    // Formata a data automaticamente com as barras em tempo real
     if (valor.length <= 2) {
-        valor = valor.replace(/(\d{2})(\d+)/, '$1/$2'); // Adiciona a barra após o dia
+        valor = valor.replace(/(\d{2})(\d+)/, '$1/$2'); 
     } else if (valor.length <= 4) {
-        valor = valor.replace(/(\d{2})(\d{2})(\d+)/, '$1/$2/$3'); // Adiciona a barra após o mês
+        valor = valor.replace(/(\d{2})(\d{2})(\d+)/, '$1/$2/$3');
     } else {
-        valor = valor.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3'); // Adiciona a barra após o ano
+        valor = valor.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3'); 
     }
 
-    // Atualiza o valor do campo com a data formatada
     event.target.value = valor;
 });
 
 document.getElementById("task-deadline").addEventListener("input", function(event) {
     let valor = event.target.value;
     
-    // Remove todos os caracteres não numéricos
     valor = valor.replace(/\D/g, '');
 
-    // Impede a digitação de mais de 8 caracteres
     if (valor.length > 8) {
-        valor = valor.substring(0, 8); // Limita a 8 caracteres
+        valor = valor.substring(0, 8);
     }
 
-    // Formata a data automaticamente com as barras em tempo real
     if (valor.length <= 2) {
-        valor = valor.replace(/(\d{2})(\d+)/, '$1/$2'); // Adiciona a barra após o dia
-    } else if (valor.length <= 4) {
-        valor = valor.replace(/(\d{2})(\d{2})(\d+)/, '$1/$2/$3'); // Adiciona a barra após o mês
+        valor = valor.replace(/(\d{2})(\d+)/, '$1/$2');
+        valor = valor.replace(/(\d{2})(\d{2})(\d+)/, '$1/$2/$3');
     } else {
-        valor = valor.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3'); // Adiciona a barra após o ano
+        valor = valor.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
     }
 
-    // Atualiza o valor do campo com a data formatada
     event.target.value = valor;
 });
 
@@ -85,45 +76,36 @@ document.getElementById("task-deadline").addEventListener("input", function(even
 document.getElementById("edit-cost").addEventListener("input", function(event) {
     let valor = event.target.value;
 
-    // Remove caracteres não numéricos, exceto ponto e vírgula
     valor = valor.replace(/[^0-9,\.]/g, '');
 
-    // Substitui a vírgula por ponto, pois o float usa ponto como separador decimal
     valor = valor.replace(',', '.');
 
-    // Verifica se o valor é válido como número float
     if (!validarFloat(valor)) {
         event.target.setCustomValidity("Por favor, insira um número válido.");
     } else {
         event.target.setCustomValidity("");
     }
 
-    // Atualiza o valor do campo com a entrada limpa e convertida
     event.target.value = valor;
 });
 
 document.getElementById("task-cost").addEventListener("input", function(event) {
     let valor = event.target.value;
 
-    // Remove caracteres não numéricos, exceto ponto e vírgula
     valor = valor.replace(/[^0-9,\.]/g, '');
 
-    // Substitui a vírgula por ponto, pois o float usa ponto como separador decimal
     valor = valor.replace(',', '.');
 
-    // Verifica se o valor é válido como número float
     if (!validarFloat(valor)) {
         event.target.setCustomValidity("Por favor, insira um número válido.");
     } else {
         event.target.setCustomValidity("");
     }
 
-    // Atualiza o valor do campo com a entrada limpa e convertida
     event.target.value = valor;
 });
 
 function validarFloat(valor) {
-    // Regex para validar números decimais com ponto (permitindo apenas um ponto)
     const regexFloat = /^[+-]?\d+(\.\d+)?$/;
     return regexFloat.test(valor);
 }
@@ -135,7 +117,7 @@ function validarData(valor) {
 }
 
 document.getElementById("btn-salvar").addEventListener("click", function(event) {
-    event.preventDefault(); // Impede o envio do formulário
+    event.preventDefault();
 
     let nome = document.getElementById("task-name").value;
     let custo = document.getElementById("task-cost").value;
