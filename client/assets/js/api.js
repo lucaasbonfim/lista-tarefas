@@ -80,7 +80,7 @@ async function createTask() {
     console.log(taskData)
 
     try {
-        const response = await fetch('http://localhost:3000/task', {
+        const response = await fetch(`${window.location.origin}/api/task`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -104,7 +104,7 @@ async function createTask() {
 
 async function edit_task(id) {
     try {
-        const response = await fetch(`http://localhost:3000/task/${id}`);
+        const response = await fetch(`${window.location.origin}/api/task/${id}`);
         
         if (!response.ok) {
             throw new Error("Erro ao buscar a tarefa");
@@ -136,12 +136,10 @@ async function edit_task(id) {
                 erros.push("Nome está vazio.");
             }
         
-            // Valida o campo de custo (precisa ser um número válido)
             if (!validarFloat(custo.value)) {
                 erros.push("Custo está inválido.");
             }
         
-            // Valida o campo de data (precisa ser no formato DD/MM/YYYY)
             if (!validarData(data.value)) {
                 erros.push("Data está inválida.");
             }
@@ -160,7 +158,7 @@ async function edit_task(id) {
             const json = JSON.stringify(dados);
 
             try {
-                const updateResponse = await fetch(`http://localhost:3000/task/${id}`, {
+                const updateResponse = await fetch(`${window.location.origin}/api/task/${id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'  
@@ -199,7 +197,7 @@ function delete_task(id) {
         console.log("Excluindo tarefa com ID:", id);
 
         try {
-            const response = await fetch(`http://localhost:3000/task/${id}`, {
+            const response = await fetch(`${window.location.origin}/api/task/${id}`, {
                 method: 'DELETE'
             });
 
@@ -222,8 +220,7 @@ function delete_task(id) {
 
 async function order_task_down(id) {
     try {
-        // Busca todas as tarefas
-        const response = await fetch(`http://localhost:3000/task`);
+        const response = await fetch(`${window.location.origin}/api/task`);
         
         if (!response.ok) {
             throw new Error("Erro ao buscar as tarefas");
@@ -231,7 +228,6 @@ async function order_task_down(id) {
 
         const tarefas = await response.json();
 
-        // Busca a tarefa atual
         const task = tarefas.find(t => t.id === id);
         
         if (!task) {
@@ -239,29 +235,24 @@ async function order_task_down(id) {
             return;
         }
 
-        // Verifica se é a última tarefa
         const isLastTask = task.order === Math.max(...tarefas.map(t => t.order));
 
         if (isLastTask) {
             console.log("Essa já é a última tarefa!");
         } else {
-            // Busca a próxima tarefa com o próximo valor de "order"
             const nextTask = tarefas.find(t => t.order === task.order + 1);
             
             if (nextTask) {
-                // Inverte os valores de "order" entre a tarefa atual e a próxima
                 const updatedTask = { ...task, order: nextTask.order };
                 const updatedNextTask = { ...nextTask, order: task.order };
 
-                // Atualiza a tarefa atual
-                await fetch(`http://localhost:3000/task/${task.id}`, {
+                await fetch(`${window.location.origin}/api/task/${task.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(updatedTask)
                 });
 
-                // Atualiza a próxima tarefa
-                await fetch(`http://localhost:3000/task/${nextTask.id}`, {
+                await fetch(`${window.location.origin}/api/task/${nextTask.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(updatedNextTask)
@@ -280,8 +271,7 @@ async function order_task_down(id) {
 
 async function order_task_up(id) {
     try {
-        // Busca todas as tarefas
-        const response = await fetch(`http://localhost:3000/task`);
+        const response = await fetch(`${window.location.origin}/api/task`);
         
         if (!response.ok) {
             throw new Error("Erro ao buscar as tarefas");
@@ -289,13 +279,11 @@ async function order_task_up(id) {
 
         const tarefas = await response.json();
 
-        // Verifica se existe apenas uma tarefa
         if (tarefas.length === 1) {
             console.log("Existe apenas uma tarefa, nada para ordenar.");
             return;
         }
 
-        // Busca a tarefa atual
         const task = tarefas.find(t => t.id === id);
         
         if (!task) {
@@ -303,29 +291,24 @@ async function order_task_up(id) {
             return;
         }
 
-        // Verifica se é a primeira tarefa
         const isFirstTask = task.order === Math.min(...tarefas.map(t => t.order));
 
         if (isFirstTask) {
             console.log("Essa já é a primeira tarefa!");
         } else {
-            // Busca a tarefa anterior com o valor de "order" imediatamente menor
             const previousTask = tarefas.find(t => t.order === task.order - 1);
             
             if (previousTask) {
-                // Inverte os valores de "order" entre a tarefa atual e a anterior
                 const updatedTask = { ...task, order: previousTask.order };
                 const updatedPreviousTask = { ...previousTask, order: task.order };
 
-                // Atualiza a tarefa atual
-                await fetch(`http://localhost:3000/task/${task.id}`, {
+                await fetch(`${window.location.origin}/api/task/${task.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(updatedTask)
                 });
 
-                // Atualiza a tarefa anterior
-                await fetch(`http://localhost:3000/task/${previousTask.id}`, {
+                await fetch(`${window.location.origin}/api/task/${previousTask.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(updatedPreviousTask)

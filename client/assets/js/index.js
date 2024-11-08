@@ -137,29 +137,24 @@ function validarData(valor) {
 document.getElementById("btn-salvar").addEventListener("click", function(event) {
     event.preventDefault(); // Impede o envio do formulário
 
-    // Validação dos campos
     let nome = document.getElementById("task-name").value;
     let custo = document.getElementById("task-cost").value;
     let data = document.getElementById("task-deadline").value;
 
     let erros = [];
 
-    // Valida o campo de nome (exemplo de validação simples)
     if (nome.trim() === "") {
         erros.push("Nome está vazio.");
     }
 
-    // Valida o campo de custo (precisa ser um número válido)
     if (!validarFloat(custo)) {
         erros.push("Custo está inválido.");
     }
 
-    // Valida o campo de data (precisa ser no formato DD/MM/YYYY)
     if (!validarData(data)) {
         erros.push("Data está inválida.");
     }
 
-    // Se houver erros, mostra um alerta
     if (erros.length > 0) {
         alert("Os seguintes campos estão incorretos:\n\n" + erros.join("\n"));
     }
