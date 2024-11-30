@@ -19,9 +19,9 @@ export const deleteTask = async (id) => {
     }
 };
 
-export const getAllTasks = async () => {
+export const getAllTasks = async (id) => {
     try {
-        const tasks = await knex("task").select("*");
+        const tasks = await knex("task").select("*").where({ user_id: id });
         return tasks;
     } catch (error) {
         throw error;

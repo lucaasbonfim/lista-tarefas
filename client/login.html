@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do</title>
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fontawesome/all.min.css">
+    <link rel="shortcut icon" href="assets/img/task-management.png">
+</head>
+<body>
+    
+    <div class="container my-5">
+
+
+        <!-- cabeçalho -->
+        <div class="row mb-5">
+            <div class="col d-flex align-items-center">
+                <img src="assets/img/task-management.png" alt="Logo" class="img-fluid" width="30px">
+                <h2>Lista de Tarefas</h2>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="w-100" style="max-width: 400px;">
+                <div class="mb-3">
+                    <input type="email" id="email" class="form-control rounded p-2 mb-3" maxlength="100" placeholder="Email" required>
+                    <small class="requirement text-danger" id="email-error" style="display: none; font-size: 0.8rem;">Por favor, insira um e-mail válido.</small>
+                </div>
+                <div class="mb-3">
+                    <input type="password" id="password" class="form-control rounded p-2 mb-3" placeholder="Senha" maxlength="20">
+                    <ul id="requirements" class="list-unstyled; d-none;" style="font-size: 0.8rem;">
+                        <li class="requirement text-danger" id="length" class="font-size: 0.8rem;">Pelo menos 8 caracteres</li>
+                        <li class="requirement text-danger" id="uppercase">Pelo menos uma letra maiúscula</li>
+                        <li class="requirement text-danger" id="number">Pelo menos um número</li>
+                        <li class="requirement text-danger" id="special">Pelo menos um caractere especial (!@#$%^&*)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <form>
+            
+          </form>          
+
+
+        <div class="col text-center">
+            <div class="d-flex flex-column align-items-center mb-3">
+                <a href="new.html" class="mb-2 text-decoration-none" style="font-size: 0.8rem;">Novo cadastro</a>
+                <a href="forgot_pass.html" class="mb-3 text-decoration-none" style="font-size: 0.8rem;">Esqueci a senha</a>
+            </div>
+            <div class="d-flex justify-content-center">
+                <a href="index.html" class="btn btn-secondary">Entrar</a>
+            </div>
+        </div>
+        
+       
+
+    </div>
+
+    <div class="d-flex justify-content-center">
+      
+      <button type="button" class="btn btn-primary">Button</button>
+    </div>
+
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const requirementsList = document.getElementById('requirements');
+        const requirements = {
+          length: document.getElementById('length'),
+          uppercase: document.getElementById('uppercase'),
+          number: document.getElementById('number'),
+          special: document.getElementById('special')
+        };
+    
+        // Mostrar requisitos ao focar no campo
+        passwordInput.addEventListener('focus', () => {
+          requirementsList.classList.remove('d-none');
+        });
+    
+        // Ocultar requisitos ao perder o foco
+        passwordInput.addEventListener('blur', () => {
+          requirementsList.classList.add('d-none');
+        });
+    
+        // Validar senha em tempo real
+        passwordInput.addEventListener('input', () => {
+          const value = passwordInput.value;
+    
+          // Verificar os critérios
+          const hasLength = value.length >= 8;
+          const hasUppercase = /[A-Z]/.test(value);
+          const hasNumber = /\d/.test(value);
+          const hasSpecial = /[!@#$%^&*]/.test(value);
+    
+          // Atualizar classes Bootstrap
+          updateRequirement(requirements.length, hasLength);
+          updateRequirement(requirements.uppercase, hasUppercase);
+          updateRequirement(requirements.number, hasNumber);
+          updateRequirement(requirements.special, hasSpecial);
+        });
+    
+        function updateRequirement(element, isValid) {
+          if (isValid) {
+            element.classList.remove('text-danger');
+            element.classList.add('text-success');
+          } else {
+            element.classList.remove('text-success');
+            element.classList.add('text-danger');
+          }
+        }
+    </script>
+
+    <script>
+        const emailInput = document.getElementById('email');
+        const errorText = document.getElementById('email-error');
+      
+        emailInput.addEventListener('input', () => {
+          if (emailInput.validity.typeMismatch) {
+            errorText.style.display = 'block';
+          } else {
+            errorText.style.display = 'none';
+          }
+        });
+      </script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/index.js"></script>
+    <script src="assets/js/api.js"></script>
+</body>
+</html>

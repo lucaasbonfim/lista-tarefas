@@ -23,9 +23,10 @@ export const deleteTask = async (req, res) => {
     }
 }
 
-export const getAllTasks = async (_, res) => {
+export const getAllTasks = async (req, res) => {
     try {
-        const tasks = await taskBusiness.getAllTasks();
+        const user_id = req.user.id;
+        const tasks = await taskBusiness.getAllTasks(user_id);
         return res.status(200).send(tasks);
     } catch (error) {
         return res.status(500).json({message: error.message});

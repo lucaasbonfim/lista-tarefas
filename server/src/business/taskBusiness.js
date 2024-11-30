@@ -41,9 +41,9 @@ export const deleteTask = async (id) => {
     }
 };
 
-export const getAllTasks = async () => {
+export const getAllTasks = async (user_id) => {
     try {
-        const tasks = await taskDatasource.getAllTasks();
+        const tasks = await taskDatasource.getAllTasks(user_id);
         return tasks;
     } catch (error) {
         throw error;
